@@ -52,9 +52,10 @@
                 android:textColorHint="#000000">
 
                 <EditText
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:hint="Name"
                     android:inputType="text"
                     android:textColor="#000000"
@@ -69,6 +70,7 @@
                 android:textColorHint="#000000">
 
                 <EditText
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
@@ -150,9 +152,10 @@
                 android:textColorHint="#000000">
 
                 <EditText
+                    android:id="@+id/signupPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:textColor="#000000"
@@ -167,9 +170,10 @@
                 android:textColorHint="#000000">
 
                 <EditText
+                    android:id="@+id/conPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:hint="Confirm Password"
                     android:inputType="textPassword"
                     android:textColor="#000000"
@@ -178,13 +182,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"
                 android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:entries="@array/type"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -192,10 +197,11 @@
                 android:textColorHint="#000000">
 
                 <EditText
+                    android:id="@+id/fundingCode"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
 
-                    android:hint="Funding Code"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/funding_code"
                     android:inputType="textPassword"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -203,12 +209,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/signUp"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="44dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/buttonshape"
+                android:onClick="signUp"
                 android:text="Sign up"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
