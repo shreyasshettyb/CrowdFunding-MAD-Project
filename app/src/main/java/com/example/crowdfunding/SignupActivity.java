@@ -4,14 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.crowdfunding.db.DBHelper;
-import com.example.crowdfunding.db.User;
-
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
@@ -21,7 +20,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText conPassword;
     Spinner type;
     EditText fundingCode;
-    DBHelper helper;
+    UserDBHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,37 +31,50 @@ public class SignupActivity extends AppCompatActivity {
         conPassword = findViewById(R.id.conPassword);
         fundingCode = findViewById(R.id.fundingCode);
         type = findViewById(R.id.type);
-        helper = new DBHelper(this, "infodb", null, 1);
+        helper = new UserDBHelper(this, "infodb", null, 1);
     }
 
     public void signUp(View v){
-        if( isPasswordValid()) {
-            if(helper.isUserPresent(email.getText().toString())){
-                Toast.makeText(this, "Entered Credentials already exists", Toast.LENGTH_LONG).show();
+
+        String uname = name.getText().toString(), e = email.getText().toString(), pass = password.getText().toString(), conPass = conPassword.getText().toString();
+        String fundingC = fundingCode.getText().toString();
+        String tp = type.getSelectedItem().toString();
+        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals(""))
+            return;
+        if (helper.isUserPresent(e)) {
+            Toast.makeText(this, "Entered Credentials already exists", Toast.LENGTH_LONG).show();
+        } else if (isPasswordValid(pass, conPass)) {
+            if (tp.equals("Admin")) {
+                fundingC = generateRandomWord();
+                while (helper.isFundingCodePresent(fundingC)) {
+                    fundingC = generateRandomWord();
+                }
             }
-            else {
-                if (type.getSelectedItem().toString().equals("Admin")) {
-                    fundingCode.setText("");
-                }
-                if (helper.addUser(new User(name.getText().toString(), email.getText().toString(), password.getText().toString(), type.getSelectedItem().toString(), fundingCode.getText().toString()))){
-                    Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(SignupActivity.this, AdminHome.class);
-                    startActivity(intent);
-                }
-                else{
-                    Toast.makeText(this, "Error occurred during registration, Please try again", Toast.LENGTH_LONG).show();
-                }
+            else if (helper.isFundingCodePresent(fundingC)) {
+                Toast.makeText(this, "With this FundingCode you can't register, since already been used", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (helper.addUser(new User(uname, e, pass, tp, fundingC))) {
+                Bundle bundle = new Bundle();
+                bundle.putString("Username", uname);
+                bundle.putString("Text", helper.getText(uname));
+                Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(SignupActivity.this, Home.class);
+                intent.putExtra("data", bundle);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Error occurred during registration, Please try again", Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    private boolean isPasswordValid(){
+    private boolean isPasswordValid(String pass, String repass){
+
         String msg;
         Pattern lowerCase = Pattern.compile("^.*[a-z].*$");
         Pattern upperCase = Pattern.compile("^.*[A-Z].*$");
         Pattern number = Pattern.compile("^.*[0-9].*$");
         //Pattern specialCharacter = Pattern.compile("^.*[^a-zA-Z0-9].*$");
-        String pass = password.getText().toString(), repass = conPassword.getText().toString();
         if(pass.equals("") || repass.equals(""))
             msg = "Enter password and Confirm it";
         else if(pass.length() < 8)
@@ -80,5 +92,20 @@ public class SignupActivity extends AppCompatActivity {
 
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
         return false;
+    }
+
+    private String generateRandomWord() {
+        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int LENGTH = 6;
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < LENGTH; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            char randomChar = CHARACTERS.charAt(randomIndex);
+            sb.append(randomChar);
+        }
+
+        return sb.toString();
     }
 }

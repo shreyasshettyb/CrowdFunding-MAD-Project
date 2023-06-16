@@ -22,16 +22,10 @@
             android:name=".TotalCollection"
             android:exported="false" />
         <activity
-            android:name=".VolunteerCollection"
-            android:exported="false" />
-        <activity
             android:name=".DonorInfo"
             android:exported="false" />
         <activity
-            android:name=".VolunteerHome"
-            android:exported="false" />
-        <activity
-            android:name=".AdminHome"
+            android:name=".Home"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"
