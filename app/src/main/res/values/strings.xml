@@ -2,4 +2,8 @@
     <string name="app_name">Crowd Funding</string>
     <string name="crowd_funding">Crowd Funding</string>
     <string name="get_started">Get Started</string>
+    <string name="name_of_the_fund">Name of the Fund</string>
+    <string name="fund_details">Fund Details</string>
+    <string name="submit">Submit</string>
+    <string name="funding_code">Funding Code</string>
 </resources>

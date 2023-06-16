@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VolunteerHome">
+    tools:context=".Home">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -172,6 +172,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/fundingCodeHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#B8AAAA"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

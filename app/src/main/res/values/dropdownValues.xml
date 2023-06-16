@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array
+        name="type">
+        <item>Admin</item>
+        <item>Volunteer</item>
+    </array>
+</resources>
