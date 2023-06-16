@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -39,8 +38,15 @@ public class SignupActivity extends AppCompatActivity {
         String uname = name.getText().toString(), e = email.getText().toString(), pass = password.getText().toString(), conPass = conPassword.getText().toString();
         String fundingC = fundingCode.getText().toString();
         String tp = type.getSelectedItem().toString();
-        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals(""))
+
+        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals("") || (tp.equals("Volunteer") && fundingC.equals("")))
             return;
+
+        if(!isEmailValid(e)){
+            Toast.makeText(this, "Invalid email", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (helper.isUserPresent(e)) {
             Toast.makeText(this, "Entered Credentials already exists", Toast.LENGTH_LONG).show();
         } else if (isPasswordValid(pass, conPass)) {
@@ -50,8 +56,8 @@ public class SignupActivity extends AppCompatActivity {
                     fundingC = generateRandomWord();
                 }
             }
-            else if (helper.isFundingCodePresent(fundingC)) {
-                Toast.makeText(this, "With this FundingCode you can't register, since already been used", Toast.LENGTH_LONG).show();
+            else if (helper.isFundingCodePresent(fundingC) || ! isFundingCodeValid(fundingC)) {
+                Toast.makeText(this, "Invalid FundingCode", Toast.LENGTH_LONG).show();
                 return;
             }
             if (helper.addUser(new User(uname, e, pass, tp, fundingC))) {
@@ -95,7 +101,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private String generateRandomWord() {
-        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
         int LENGTH = 6;
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
@@ -107,5 +113,15 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         return sb.toString();
+    }
+
+    private boolean isFundingCodeValid(String fc){
+        Pattern regex = Pattern.compile("^[A-Z1-9]{6}$");
+        return regex.matcher(fc).matches();
+    }
+
+    private boolean isEmailValid(String email){
+        Pattern regex = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        return regex.matcher(email).matches();
     }
 }
