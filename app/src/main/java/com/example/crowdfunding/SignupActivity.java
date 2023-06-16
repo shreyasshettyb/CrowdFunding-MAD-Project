@@ -63,10 +63,14 @@ public class SignupActivity extends AppCompatActivity {
             if (helper.addUser(new User(uname, e, pass, tp, fundingC))) {
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", uname);
-                bundle.putString("Text", helper.getText(uname));
+                String text = "Thanks for being a volunteer";
+                if(tp.equals("Admin"))
+                    text = "Want to add volunteers? Share this code\n                        " + fundingC;
+                bundle.putString("Text", text);
                 Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SignupActivity.this, Home.class);
                 intent.putExtra("data", bundle);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Error occurred during registration, Please try again", Toast.LENGTH_LONG).show();

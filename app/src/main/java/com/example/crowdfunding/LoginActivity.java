@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 Intent intent = new Intent(LoginActivity.this, Home.class);
                 intent.putExtra("data", bundle);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }catch(Exception e){
                 Log.e("mytag", "" + e);
