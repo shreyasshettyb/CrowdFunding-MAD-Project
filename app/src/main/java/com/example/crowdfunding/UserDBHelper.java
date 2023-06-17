@@ -21,7 +21,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create = "CREATE TABLE users (id NUMBER PRIMARY KEY, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT)";
+        String create = "CREATE TABLE users (id NUMBER PRIMARY KEY, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT, fundingname TEXT)";
         db.execSQL(create);
     }
 
@@ -41,6 +41,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             values.put("password", user.getPassword());
             values.put("type", user.getType());
             values.put("fundingCode", user.getFundingCode());
+            values.put("fundingName", user.getFundingName());
             long k = db.insert("users", null, values);
             db.close();
             return k != -1;
@@ -84,7 +85,6 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public boolean isFundingCodePresent(String fundingCode){
         try {
             SQLiteDatabase db = this.getReadableDatabase();
-            @SuppressLint("Recycle")
             Cursor cursor = db.query("users", new String[]{"email"}, "fundingCode=?", new String[]{fundingCode}, null, null, null);
             boolean ret = cursor != null && cursor.moveToFirst();
             db.close();
@@ -97,11 +97,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
     public String getText(String email){
         try {
             SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.query("users", new String[]{"type", "fundingCode"}, "email=?", new String[]{email}, null, null, null);
+            Cursor cursor = db.query("users", new String[]{"type", "fundingCode", "fundingName"}, "email=?", new String[]{email}, null, null, null);
             cursor.moveToFirst();
-            String text = "Thanks for being a volunteer";
+            String fundingName = cursor.getString(2);
+            String text = fundingName + "+Thanks for being a volunteer";
             if (cursor != null && cursor.moveToFirst() && cursor.getString(0).equals("Admin"))
-                text = "Want to add volunteers? Share this code\n                        " + cursor.getString(1);
+                text = fundingName + "+Want to add volunteers? Share this code\n                        " + cursor.getString(1);
             db.close();
             return text;
         }catch(Exception e){

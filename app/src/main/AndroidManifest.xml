@@ -16,7 +16,7 @@
             android:name=".FundDetails"
             android:exported="false" />
         <activity
-            android:name=".CollectMoney"
+            android:name=".CollectFunds"
             android:exported="false" />
         <activity
             android:name=".TotalCollection"
