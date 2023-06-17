@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class CollectMoney extends AppCompatActivity {
+public class CollectFunds extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

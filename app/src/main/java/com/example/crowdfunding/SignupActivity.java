@@ -19,6 +19,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText conPassword;
     Spinner type;
     EditText fundingCode;
+    EditText fundingName;
     UserDBHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class SignupActivity extends AppCompatActivity {
         conPassword = findViewById(R.id.conPassword);
         fundingCode = findViewById(R.id.fundingCode);
         type = findViewById(R.id.type);
+//        fundingName = findViewById(R.id.fundingName);
         helper = new UserDBHelper(this, "infodb", null, 1);
     }
 
@@ -37,9 +39,11 @@ public class SignupActivity extends AppCompatActivity {
 
         String uname = name.getText().toString(), e = email.getText().toString(), pass = password.getText().toString(), conPass = conPassword.getText().toString();
         String fundingC = fundingCode.getText().toString();
+        //String fundingName = fundingName.getText().toString();
+        String fundingName = "TESTING";
         String tp = type.getSelectedItem().toString();
 
-        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals("") || (tp.equals("Volunteer") && fundingC.equals("")))
+        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals("") || (tp.equals("Volunteer") && fundingC.equals("")) || fundingName.equals(""))
             return;
 
         if(!isEmailValid(e)){
@@ -56,16 +60,16 @@ public class SignupActivity extends AppCompatActivity {
                     fundingC = generateRandomWord();
                 }
             }
-            else if (helper.isFundingCodePresent(fundingC) || ! isFundingCodeValid(fundingC)) {
+            else if (helper.isFundingCodePresent(fundingC) || !isFundingCodeValid(fundingC)) {
                 Toast.makeText(this, "Invalid FundingCode", Toast.LENGTH_LONG).show();
                 return;
             }
-            if (helper.addUser(new User(uname, e, pass, tp, fundingC))) {
+            if (helper.addUser(new User(uname, e, pass, tp, fundingC, fundingName))) {
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", uname);
-                String text = "Thanks for being a volunteer";
+                String text = fundingName + "+Thanks for being a volunteer";
                 if(tp.equals("Admin"))
-                    text = "Want to add volunteers? Share this code\n                        " + fundingC;
+                    text = fundingName + "+Want to add volunteers? Share this code\n                        " + fundingC;
                 bundle.putString("Text", text);
                 Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SignupActivity.this, Home.class);
