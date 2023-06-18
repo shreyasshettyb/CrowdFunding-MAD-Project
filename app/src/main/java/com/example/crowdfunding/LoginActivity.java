@@ -10,6 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.crowdfunding.DBHelpers.UserDBHelper;
+
+
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
@@ -22,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.loginEmail);
         password = findViewById(R.id.loginPassword);
         signup = findViewById(R.id.linkToSignUp);
-        helper = new UserDBHelper(this, "infodb", null, 1);
+        helper = new UserDBHelper(this, "innodb", null, 1);
         signup.setOnClickListener(v -> {
                 Intent i = new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(i);
@@ -47,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }catch(Exception e){
-                Log.e("mytag", "" + e);
+                Log.e("myTag", "" + e);
             }
         }
         else{
