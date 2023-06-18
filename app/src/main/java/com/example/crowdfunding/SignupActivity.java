@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.crowdfunding.DBHelpers.UserDBHelper;
+import com.example.crowdfunding.Models.User;
+
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -32,7 +35,7 @@ public class SignupActivity extends AppCompatActivity {
         fundingCode = findViewById(R.id.fundingCode);
         type = findViewById(R.id.type);
 //        fundingName = findViewById(R.id.fundingName);
-        helper = new UserDBHelper(this, "infodb", null, 1);
+        helper = new UserDBHelper(this, "innodb", null, 1);
     }
 
     public void signUp(View v){
@@ -67,9 +70,11 @@ public class SignupActivity extends AppCompatActivity {
             if (helper.addUser(new User(uname, e, pass, tp, fundingC, fundingName))) {
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", uname);
-                String text = fundingName + "+Thanks for being a volunteer";
+                String text = fundingName + "+" + fundingC;
                 if(tp.equals("Admin"))
-                    text = fundingName + "+Want to add volunteers? Share this code\n                        " + fundingC;
+                    text += "+Want to add volunteers? Share this code\n                        " + fundingC;
+                else
+                    text += "+Thanks for being a volunteer";
                 bundle.putString("Text", text);
                 Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SignupActivity.this, Home.class);

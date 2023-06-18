@@ -1,7 +1,7 @@
-package com.example.crowdfunding;
+package com.example.crowdfunding.Models;
 
 public class User {
-    private String name, email, password, type, fundingCode, fundingName;
+    private final String name, email, password, type, fundingCode, fundingName;
 
     public User(String name, String email, String password, String type, String fundingCode, String fundingName) {
         this.name = name;

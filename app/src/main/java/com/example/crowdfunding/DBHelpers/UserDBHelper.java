@@ -1,17 +1,16 @@
-package com.example.crowdfunding;
+package com.example.crowdfunding.DBHelpers;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.crowdfunding.User;
+import com.example.crowdfunding.Models.User;
+
 
 public class UserDBHelper extends SQLiteOpenHelper {
 
@@ -21,7 +20,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create = "CREATE TABLE users (id NUMBER PRIMARY KEY, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT, fundingname TEXT)";
+        String create = "CREATE TABLE users (id NUMBER PRIMARY KEY, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT, fundingName TEXT)";
         db.execSQL(create);
     }
 
@@ -47,7 +46,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             return k != -1;
         }
         catch(Exception e){
-            Log.e("mytag", "" + e);
+            Log.e("myTag", "" + e);
         }
         return false;
     }
@@ -58,11 +57,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
             db = this.getReadableDatabase();
             Cursor cursor = db.query("users", new String[]{"email"}, "email=? and password=?", new String[]{email, password}, null, null, null);
             boolean t = cursor != null && cursor.moveToFirst();
+            if(cursor != null)
+                cursor.close();
             db.close();
             return t;
         }
         catch(Exception e){
-            Log.e("mytag", "" + e);
+            Log.e("myTag", "" + e);
         }
         return false;
     }
@@ -73,11 +74,13 @@ public class UserDBHelper extends SQLiteOpenHelper {
             db = this.getReadableDatabase();
             Cursor cursor = db.query("users", new String[] {"email"}, "email=?", new String[]{email}, null, null, null);
             boolean t = cursor != null && cursor.moveToFirst();
+            if(cursor != null)
+                cursor.close();
             db.close();
             return t;
         }
         catch(Exception e){
-            Log.e("mytag", "" + e);
+            Log.e("myTag", "" + e);
         }
         return false;
     }
@@ -87,10 +90,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.query("users", new String[]{"email"}, "fundingCode=?", new String[]{fundingCode}, null, null, null);
             boolean ret = cursor != null && cursor.moveToFirst();
+            if(cursor != null)
+                cursor.close();
             db.close();
             return ret;
         }catch (Exception e){
-            Log.e("mytag", "" + e);
+            Log.e("myTag", "" + e);
         }
         return false;
     }
@@ -99,15 +104,19 @@ public class UserDBHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.query("users", new String[]{"type", "fundingCode", "fundingName"}, "email=?", new String[]{email}, null, null, null);
             cursor.moveToFirst();
-            String fundingName = cursor.getString(2);
-            String text = fundingName + "+Thanks for being a volunteer";
-            if (cursor != null && cursor.moveToFirst() && cursor.getString(0).equals("Admin"))
-                text = fundingName + "+Want to add volunteers? Share this code\n                        " + cursor.getString(1);
+            String text = cursor.getString(2) + "+" + cursor.getString(1);
+            if (cursor.getString(0).equals("Admin")) {
+                text += "+Want to add volunteers? Share this code\n                        " + cursor.getString(1);
+            }
+            else
+                text += "Thanks for being a volunteer";
+            cursor.close();
             db.close();
             return text;
         }catch(Exception e){
-            Log.e("mytag", "" + e);
+            Log.e("myTag", "" + e);
         }
         return "(Unable to generate the Funding Code)";
     }
+
 }
