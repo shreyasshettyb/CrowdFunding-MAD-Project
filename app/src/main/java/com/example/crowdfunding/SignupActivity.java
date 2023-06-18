@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.crowdfunding.Models.User;
@@ -33,20 +34,29 @@ public class SignupActivity extends AppCompatActivity {
         conPassword = findViewById(R.id.conPassword);
         fundingCode = findViewById(R.id.fundingCode);
         type = findViewById(R.id.type);
-//        fundingName = findViewById(R.id.fundingName);
+        fundingName = findViewById(R.id.fundingName_signUp);
         helper = new UserDBHelper(this, "userDB", null, 1);
+
+        TextView backButton = findViewById(R.id.back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     public void signUp(View v){
 
         String uname = name.getText().toString(), e = email.getText().toString(), pass = password.getText().toString(), conPass = conPassword.getText().toString();
         String fundingC = fundingCode.getText().toString();
-        //String fundingName = fundingName.getText().toString();
-        String fundingName = "TESTING";
+        String fundName = fundingName.getText().toString();
         String tp = type.getSelectedItem().toString();
 
-        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals("") || (tp.equals("Volunteer") && fundingC.equals("")) || fundingName.equals(""))
+        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals("") || (tp.equals("Volunteer") && fundingC.equals("")) || fundName.equals("")){
+            Toast.makeText(this, "Enter all required fields", Toast.LENGTH_LONG).show();
             return;
+        }
 
         if(!isEmailValid(e)){
             Toast.makeText(this, "Invalid email", Toast.LENGTH_LONG).show();
@@ -67,12 +77,7 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(this, "Invalid FundingCode", Toast.LENGTH_LONG).show();
                 return;
             }
-            if (helper.addUser(new User(uname, e, pass, tp, fundingC, fundingName))) {
-//                String text = fundingName + "+" + fundingC;
-//                if(tp.equals("Admin"))
-//                    text += "+Want to add volunteers? Share this code\n                        " + fundingC;
-//                else
-//                    text += "+Thanks for being a volunteer";
+            if (helper.addUser(new User(uname, e, pass, tp, fundingC, fundName))) {
                 Bundle bundle = helper.getInfo(e);
                 if(bundle == null) {
                     Toast.makeText(this, "Something went wrong, Try Log In", Toast.LENGTH_LONG).show();

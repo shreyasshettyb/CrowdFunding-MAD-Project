@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true"
     android:orientation="vertical"
     tools:context=".SignupActivity">
 
-<!--    <FrameLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content">-->
 
-<!--        <ImageView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:scaleType="centerCrop"-->
-<!--            android:src="@drawable/loginbg" />-->
-
-<!--    </FrameLayout>-->
-
-    <ScrollView
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="24dp"
+            tools:ignore="UselessParent">
 
             <TextView
                 android:id="@+id/back"
@@ -37,7 +32,7 @@
                 android:layout_marginBottom="32dp"
                 android:gravity="center"
                 android:shadowColor="#57000000"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="28sp"
@@ -56,10 +51,11 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:hint="Name"
+                    android:hint="@string/name"
                     android:inputType="text"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:autofillHints="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,77 +69,14 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:autofillHints="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:weightSum="100">-->
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:layout_weight="33.3"-->
-<!--                    android:textColorHint="#000000">-->
-
-<!--                    <EditText-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        -->
-<!--                        android:hint="Year"-->
-<!--                        android:inputType="text"-->
-<!--                        android:textColor="#000000"-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="4dp"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:layout_marginRight="4dp"-->
-<!--                    android:layout_weight="33.3"-->
-<!--                    android:textColorHint="#000000">-->
-
-<!--                    <EditText-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        -->
-<!--                        android:hint="Branch"-->
-<!--                        android:inputType="text"-->
-<!--                        android:textColor="#000000"-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:layout_weight="33.3"-->
-<!--                    android:textColorHint="#000000">-->
-
-<!--                    <EditText-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:fontFamily="@font/calibri"-->
-<!--                        android:hint="Group"-->
-<!--                        android:inputType="text"-->
-<!--                        android:textColor="#000000"-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--            </LinearLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -156,10 +89,11 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:autofillHints="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,10 +108,11 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:hint="Confirm Password"
+                    android:hint="@string/confirm_password"
                     android:inputType="textPassword"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:autofillHints="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -204,7 +139,27 @@
                     android:hint="@string/funding_code"
                     android:inputType="textPassword"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:autofillHints="" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColorHint="#000000">
+
+                <EditText
+                    android:id="@id/fundingName_signUp"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:hint="@string/funding_name"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:autofillHints="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -217,7 +172,7 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/buttonshape"
                 android:onClick="signUp"
-                android:text="Sign up"
+                android:text="@string/sign_up_1"
                 android:textAllCaps="false"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
@@ -228,7 +183,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
 
+    </ScrollView>
 
 </RelativeLayout>
