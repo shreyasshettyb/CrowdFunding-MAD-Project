@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.crowdfunding.DBHelpers.UserDBHelper;
 import com.example.crowdfunding.Models.User;
 
 import java.util.Random;
@@ -35,7 +34,7 @@ public class SignupActivity extends AppCompatActivity {
         fundingCode = findViewById(R.id.fundingCode);
         type = findViewById(R.id.type);
 //        fundingName = findViewById(R.id.fundingName);
-        helper = new UserDBHelper(this, "innodb", null, 1);
+        helper = new UserDBHelper(this, "userDB", null, 1);
     }
 
     public void signUp(View v){
@@ -54,28 +53,36 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        if (helper.isUserPresent(e)) {
+        if (! helper.getUserName(e).equals("")) {
             Toast.makeText(this, "Entered Credentials already exists", Toast.LENGTH_LONG).show();
-        } else if (isPasswordValid(pass, conPass)) {
+        }
+        else if (isPasswordValid(pass, conPass)) {
             if (tp.equals("Admin")) {
                 fundingC = generateRandomWord();
                 while (helper.isFundingCodePresent(fundingC)) {
                     fundingC = generateRandomWord();
                 }
             }
-            else if (helper.isFundingCodePresent(fundingC) || !isFundingCodeValid(fundingC)) {
+            else if ( !isFundingCodeValid(fundingC)) {
                 Toast.makeText(this, "Invalid FundingCode", Toast.LENGTH_LONG).show();
                 return;
             }
             if (helper.addUser(new User(uname, e, pass, tp, fundingC, fundingName))) {
-                Bundle bundle = new Bundle();
-                bundle.putString("Username", uname);
-                String text = fundingName + "+" + fundingC;
-                if(tp.equals("Admin"))
-                    text += "+Want to add volunteers? Share this code\n                        " + fundingC;
-                else
-                    text += "+Thanks for being a volunteer";
-                bundle.putString("Text", text);
+//                String text = fundingName + "+" + fundingC;
+//                if(tp.equals("Admin"))
+//                    text += "+Want to add volunteers? Share this code\n                        " + fundingC;
+//                else
+//                    text += "+Thanks for being a volunteer";
+                Bundle bundle = helper.getInfo(e);
+                if(bundle == null) {
+                    Toast.makeText(this, "Something went wrong, Try Log In", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    return;
+                }
+
+                bundle.putString("Username", e);
                 Toast.makeText(this, "Successfully Registered", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(SignupActivity.this, Home.class);
                 intent.putExtra("data", bundle);
@@ -134,7 +141,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private boolean isEmailValid(String email){
-        Pattern regex = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        Pattern regex = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
         return regex.matcher(email).matches();
     }
 }
