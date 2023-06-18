@@ -31,4 +31,11 @@
     <string name="submit_1">Submit</string>
     <string name="donor_name_optional">DONOR NAME(optional)</string>
     <string name="donor_name">DONOR NAME:</string>
+    <string name="funding_name">Funding Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up_1">Sign up</string>
 </resources>
