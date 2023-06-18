@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.crowdfunding.DBHelpers.UserDBHelper;
-
 
 public class LoginActivity extends AppCompatActivity {
     EditText username;
@@ -25,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.loginEmail);
         password = findViewById(R.id.loginPassword);
         signup = findViewById(R.id.linkToSignUp);
-        helper = new UserDBHelper(this, "innodb", null, 1);
+        helper = new UserDBHelper(this, "userDB", null, 1);
         signup.setOnClickListener(v -> {
                 Intent i = new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(i);
@@ -39,10 +37,16 @@ public class LoginActivity extends AppCompatActivity {
         if(user.equals("") || pass.equals(""))
             return;
         if( helper.checkUser(user, pass) ){
-            Bundle bundle = new Bundle();
+
+            Bundle bundle = helper.getInfo(user);
+
+            if(bundle == null){
+                Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             bundle.putString("Username", user);
-            String text = helper.getText(user);
-            bundle.putString("Text", text);
+
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
             try {
                 Intent intent = new Intent(LoginActivity.this, Home.class);

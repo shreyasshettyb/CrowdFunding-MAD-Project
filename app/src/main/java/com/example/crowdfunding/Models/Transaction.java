@@ -1,18 +1,17 @@
 package com.example.crowdfunding.Models;
 
 public class Transaction {
-    private final String donorName, upiID, transactionID, dateTime, collectorEmail, fundingCode, collectorName;
+    private final String donorName, upiID, dateTime, collectorEmail, fundingCode, collectorName;
     private final  double amount;
 
-    public Transaction(String donorName, String upiID, String transactionID, String dateTime, double amount, String volunteerEmail, String fundingCode, String collecotorName) {
+    public Transaction(String donorName, String upiID, String dateTime, double amount, String collectorEmail, String fundingCode, String collectorName) {
         this.donorName = donorName;
         this.upiID = upiID;
-        this.transactionID = transactionID;
         this.dateTime = dateTime;
         this.amount = amount;
-        this.collectorEmail = volunteerEmail;
+        this.collectorEmail = collectorEmail;
         this.fundingCode = fundingCode;
-        this.collectorName = collecotorName;
+        this.collectorName = collectorName;
     }
 
     public String getDonorName() {
@@ -21,10 +20,6 @@ public class Transaction {
 
     public String getUpiID() {
         return upiID;
-    }
-
-    public String getTransactionID() {
-        return transactionID;
     }
 
     public String getDateTime() {

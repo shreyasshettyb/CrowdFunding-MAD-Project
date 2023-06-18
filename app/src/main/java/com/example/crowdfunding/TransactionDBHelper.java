@@ -1,6 +1,5 @@
-package com.example.crowdfunding.DBHelpers;
+package com.example.crowdfunding;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,7 +20,7 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create = "CREATE TABLE transactions (donorName TEXT, upiID TEXT, transactionID TEXT PRIMARY KEY, dateTime DATETIME, amount NUMBER, collectorEmail TEXT, collectorName TEXT, fundingCode TEXT)";
+        String create = "CREATE TABLE transactions (transactionID INTEGER PRIMARY KEY AUTOINCREMENT, donorName TEXT, upiID TEXT, dateTime TEXT, amount NUMBER, collectorEmail TEXT, collectorName TEXT, fundingCode TEXT)";
         db.execSQL(create);
     }
 
@@ -38,7 +37,6 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put("donorName", t.getDonorName());
             values.put("upiID", t.getUpiID());
-            values.put("transactionID", t.getTransactionID());
             values.put("dateTime", t.getDateTime());
             values.put("amount", t.getAmount());
             values.put("collectorEmail", t.getCollectorEmail());
@@ -53,24 +51,28 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public Cursor getTransactions(String email){
-        SQLiteDatabase db = this.getReadableDatabase();
-        @SuppressLint("Recycle")
-        Cursor cursor = db.rawQuery("Select * from transactions where email=?", new String[] {email});
-        return cursor;
-    }
 
     public CollectorOverview[] getCollectorOverview(String fundingCode){
         try{
+            CollectorOverview[] transactionList;
             SQLiteDatabase db = this.getReadableDatabase();
-            //Cursor cursor = db.rawQuery("Select * from transactions where fundingCode=?", new String[] {fundingCode});
-//            if(cursor != null && cursor.moveToFirst())
-//                return new CollectorOverview[]{new CollectorOverview("Error while fetching", 0.0)};
+            Cursor cursor = db.query("transactions", new String[] {"collectorName, collectorEmail", "SUM(amount) AS totalAmount"}, "fundingCode=?", new String[]{fundingCode}, "collectorEmail", null, null);
+            if(! cursor.moveToFirst())
+                return new CollectorOverview[]{};
+            int count = cursor.getCount();
+            transactionList = new CollectorOverview[count];
+            for(int i = 0; i < count; i++) {
+                transactionList[i] = new CollectorOverview(cursor.getString(0), cursor.getString(1), cursor.getDouble(2));
+                cursor.moveToNext();
+            }
+            cursor.close();
             db.close();
-            return new CollectorOverview[] {new CollectorOverview("hello1", 10.0)} ;
+            Log.d("myTag", transactionList[0].getCollectorName() + " " + transactionList[1].getCollectorName());
+            return transactionList;
         }catch (Exception e){
             Log.e("myTag", "" + e);
         }
-        return new CollectorOverview[] {new CollectorOverview("Error while fetching", 0.0)} ;
+        return new CollectorOverview[] {new CollectorOverview("Error", "Try Again", 0.0)} ;
     }
+
 }

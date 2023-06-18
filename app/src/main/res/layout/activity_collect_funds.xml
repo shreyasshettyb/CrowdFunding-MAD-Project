@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CollectFunds">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/fund_collection"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/fundingName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="updateAmount"
+            android:text="@string/_100"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="updateAmount"
+            android:text="@string/_500"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="updateAmount"
+            android:text="@string/_200"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:onClick="updateAmount"
+            android:text="@string/_1000"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup_fundCollection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:layout_editor_absoluteX="0dp">
+
+        <RadioButton
+            android:id="@+id/radioCash_fundCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="70dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/cash"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioUpi_fundCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/upi"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/upiLayout_fundCollection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup_fundCollection">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:text="@string/upi_id"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/upiID_fundCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/upi_id_1"
+            android:inputType="text"
+            android:autofillHints="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upiLayout_fundCollection">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="73dp"
+            android:layout_height="17dp"
+            android:layout_marginEnd="25dp"
+            android:text="@string/amount"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/amount_fundCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enter_amount"
+            android:inputType="number"
+            android:autofillHints="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fundingName">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:text="@string/donor_name"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/donorName_fundCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/donor_name_optional"
+            android:inputType="text"
+            android:autofillHints="" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.209">
+
+        <CheckBox
+            android:id="@+id/checkBox_authorize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:text="@string/i_hereby_confirm_the_payment_made"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/submit_fundCollection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onSubmit"
+            android:text="@string/submit_1" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,11 @@
-package com.example.crowdfunding.DBHelpers;
+package com.example.crowdfunding;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -20,7 +21,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create = "CREATE TABLE users (id NUMBER PRIMARY KEY, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT, fundingName TEXT)";
+        String create = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT, fundingName TEXT)";
         db.execSQL(create);
     }
 
@@ -68,21 +69,22 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean isUserPresent(String email){
+    public String getUserName(String email){
         SQLiteDatabase db;
         try {
             db = this.getReadableDatabase();
-            Cursor cursor = db.query("users", new String[] {"email"}, "email=?", new String[]{email}, null, null, null);
-            boolean t = cursor != null && cursor.moveToFirst();
-            if(cursor != null)
-                cursor.close();
+            Cursor cursor = db.query("users", new String[] {"name"}, "email=?", new String[]{email}, null, null, null);
+            if(! cursor.moveToFirst())
+                return "";
+            String name = cursor.getString(0);
+            cursor.close();
             db.close();
-            return t;
+            return name;
         }
         catch(Exception e){
             Log.e("myTag", "" + e);
         }
-        return false;
+        return "";
     }
 
     public boolean isFundingCodePresent(String fundingCode){
@@ -99,24 +101,28 @@ public class UserDBHelper extends SQLiteOpenHelper {
         }
         return false;
     }
-    public String getText(String email){
+    public Bundle getInfo(String email){
         try {
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.query("users", new String[]{"type", "fundingCode", "fundingName"}, "email=?", new String[]{email}, null, null, null);
-            cursor.moveToFirst();
-            String text = cursor.getString(2) + "+" + cursor.getString(1);
+
+            if(!cursor.moveToFirst())
+                return null;
+            Bundle bundle = new Bundle();
+            bundle.putString("FundingName", cursor.getString(2));
+            bundle.putString("FundingCode", cursor.getString(1));
             if (cursor.getString(0).equals("Admin")) {
-                text += "+Want to add volunteers? Share this code\n                        " + cursor.getString(1);
+                bundle.putString("Text", "Want to add volunteers? Share this code\n                        " + cursor.getString(1));
             }
             else
-                text += "Thanks for being a volunteer";
+                bundle.putString("Text", "Thanks for being a volunteer");
             cursor.close();
             db.close();
-            return text;
+            return bundle;
         }catch(Exception e){
             Log.e("myTag", "" + e);
         }
-        return "(Unable to generate the Funding Code)";
+        return null;
     }
 
 }
