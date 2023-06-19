@@ -38,4 +38,12 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up_1">Sign up</string>
+    <string name="amount_2">(amount)</string>
+    <string name="amount_donated">Amount Donated:</string>
+    <string name="date">(date)</string>
+    <string name="date_of_donation">Date of Donation:</string>
+    <string name="donor_name1">Donor Name:</string>
+    <string name="donor_name2">(donor name)</string>
+    <string name="type2">(type)</string>
+    <string name="upi_id2">(upi ID)</string>
 </resources>

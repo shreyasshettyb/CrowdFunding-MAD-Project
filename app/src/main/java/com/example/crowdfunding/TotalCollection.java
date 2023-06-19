@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.crowdfunding.Models.CollectorOverview;
@@ -43,5 +45,21 @@ public class TotalCollection extends AppCompatActivity {
         }catch(Exception e){
             Log.e("myTag", "" + e);
         }
+    }
+
+    public void viewDetailsHandler(View v){
+
+        String collectorEmail = ((TextView) findViewById(R.id.collectorEmail_totalCollection)).getText().toString();
+        String collectorName = ((TextView) findViewById(R.id.collectorName_totalCollection)).getText().toString();
+        String totalAmount = ((TextView) findViewById(R.id.amount_totalCollection)).getText().toString();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("CollectorEmail", collectorEmail);
+        bundle.putString("CollectorName", collectorName);
+        bundle.putString("TotalAmount", totalAmount);
+
+        Intent intent = new Intent(TotalCollection.this, FundDetails.class);
+        intent.putExtra("data", bundle);
+        startActivity(intent);
     }
 }
