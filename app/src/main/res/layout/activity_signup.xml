@@ -11,8 +11,7 @@
     tools:context=".SignupActivity">
 
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="UselessParent">
@@ -123,9 +122,11 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp"
                 android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown"
-                android:entries="@array/type"/>
+                android:entries="@array/type"
+                android:spinnerMode="dropdown" />
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fundingCodeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -136,11 +137,11 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
+                    android:autofillHints=""
                     android:hint="@string/funding_code"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:autofillHints="" />
+                    android:textSize="18sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
