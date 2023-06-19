@@ -125,4 +125,19 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public boolean isUserAlreadyRegistered(){
+        try{
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery("SELECT * from users", new String[]{});
+            boolean t = cursor != null && cursor.moveToFirst();
+            if(cursor != null)
+                cursor.close();
+            db.close();
+            return t;
+        }catch(Exception e){
+            Log.e("myTag", "" + e);
+        }
+        return false;
+    }
+
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText fundingCode;
     EditText fundingName;
     UserDBHelper helper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,22 @@ public class SignupActivity extends AppCompatActivity {
 
         TextView backButton = findViewById(R.id.back);
         backButton.setOnClickListener(view -> onBackPressed());
+
+        findViewById(R.id.fundingCodeLayout).setVisibility(View.GONE);
+        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 1)
+                    findViewById(R.id.fundingCodeLayout).setVisibility(View.VISIBLE);
+                else
+                    findViewById(R.id.fundingCodeLayout).setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void signUp(View v){
@@ -144,4 +162,5 @@ public class SignupActivity extends AppCompatActivity {
         Pattern regex = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
         return regex.matcher(email).matches();
     }
+
 }
