@@ -19,6 +19,7 @@ public class TotalCollection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total_collection);
+        msgTextView = findViewById(R.id.msgTextView_totalCollection);
         try {
             recyclerView = findViewById(R.id.recyclerViewTotalCollection);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
