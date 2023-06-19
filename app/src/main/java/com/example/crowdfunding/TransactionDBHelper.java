@@ -77,11 +77,19 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
         return new CollectorOverview[] {new CollectorOverview("Error", "Try Again", 0.0)} ;
     }
 
-    public DonorOverview[] getCollectorSpecific(String collectorEmail){
+    public DonorOverview[] getCollectorSpecific(String collectorEmail, int dateT, int amtASC, int amtDESC){
+        String sortBy;
         try{
+            if(dateT == 1)
+                sortBy = "dateTime";
+            else if (amtASC == 1)
+                sortBy = "amount ASC";
+            else
+                sortBy = "amount DESC";
+
             DonorOverview[] transactionList;
             SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.query("transactions", new String[] {"donorName, upiID, dateTime, amount"}, "collectorEmail=?", new String[]{collectorEmail}, null, null, null);
+            Cursor cursor = db.query("transactions", new String[] {"donorName, upiID, dateTime, amount"}, "collectorEmail=?", new String[]{collectorEmail}, null, null, sortBy);
 
             if(! cursor.moveToFirst())
                 return new DonorOverview[]{};

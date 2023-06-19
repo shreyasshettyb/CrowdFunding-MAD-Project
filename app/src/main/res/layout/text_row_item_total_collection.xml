@@ -27,7 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="60dp"
-                android:text="@string/name_of_the_collector" />
+                android:text="@string/name_of_the_collector"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/collectorName_totalCollection"
@@ -49,7 +50,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="60dp"
-                android:text="@string/email_of_the_collector" />
+                android:text="@string/email_of_the_collector"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/collectorEmail_totalCollection"
@@ -72,7 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="80dp"
-                android:text="@string/total_amount_collected" />
+                android:text="@string/total_amount_collected"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/amount_totalCollection"

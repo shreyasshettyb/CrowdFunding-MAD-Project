@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Collector Name:" />
+            android:text="Collector Name:"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/collectorName_collectorSpecific"
@@ -71,7 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Collector Email ID:" />
+            android:text="Collector Email ID:"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/collectorEmail_collectorSpecific"
@@ -98,7 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Total Amount:" />
+            android:text="Total Amount:"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/totalAmount_collectorSpecific"
@@ -125,7 +128,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="SortBy:" />
+            android:text="SortBy:"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/dateCollected_collectorSpecific"
@@ -133,7 +137,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="DateCollected" />
+            android:onClick="sortBy"
+            android:text="DateCollected"
+            android:textColor="#43A045" />
 
         <TextView
             android:id="@+id/amountAsc_collectorSpecific"
@@ -141,7 +147,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Amount ASC" />
+            android:onClick="sortBy"
+            android:text="Amount ASC"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/amountDesc_collectorSpecific"
@@ -149,7 +157,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Amount DESC" />
+            android:onClick="sortBy"
+            android:text="Amount DESC"
+            android:textColor="#000000" />
     </LinearLayout>
 
     <ScrollView
