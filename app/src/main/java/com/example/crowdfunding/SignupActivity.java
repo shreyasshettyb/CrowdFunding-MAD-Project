@@ -38,12 +38,7 @@ public class SignupActivity extends AppCompatActivity {
         helper = new UserDBHelper(this, "userDB", null, 1);
 
         TextView backButton = findViewById(R.id.back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        backButton.setOnClickListener(view -> onBackPressed());
     }
 
     public void signUp(View v){

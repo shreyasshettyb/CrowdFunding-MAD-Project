@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import com.example.crowdfunding.Models.CollectorOverview;
 import com.example.crowdfunding.Models.Transaction;
 
+
 public class TransactionDBHelper extends SQLiteOpenHelper {
 
     public TransactionDBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -65,9 +66,9 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
                 transactionList[i] = new CollectorOverview(cursor.getString(0), cursor.getString(1), cursor.getDouble(2));
                 cursor.moveToNext();
             }
+
             cursor.close();
             db.close();
-            Log.d("myTag", transactionList[0].getCollectorName() + " " + transactionList[1].getCollectorName());
             return transactionList;
         }catch (Exception e){
             Log.e("myTag", "" + e);
