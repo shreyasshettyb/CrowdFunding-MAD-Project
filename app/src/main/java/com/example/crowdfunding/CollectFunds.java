@@ -40,7 +40,7 @@ public class CollectFunds extends AppCompatActivity {
             fundingName = bundle.getString("FundingName");
 
             amount = findViewById(R.id.amount_fundCollection);
-            upiEditText = (EditText) findViewById(R.id.upiID_fundCollection);
+            upiEditText = findViewById(R.id.upiID_fundCollection);
 
             userDBHelper = new UserDBHelper(this, "userDB", null, 1);
             transactionDBHelper = new TransactionDBHelper(this, "transactionDB", null, 1);

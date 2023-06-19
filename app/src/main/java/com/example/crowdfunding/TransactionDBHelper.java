@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.crowdfunding.Models.CollectorOverview;
+import com.example.crowdfunding.Models.DonorOverview;
 import com.example.crowdfunding.Models.Transaction;
 
 
@@ -74,6 +75,30 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
             Log.e("myTag", "" + e);
         }
         return new CollectorOverview[] {new CollectorOverview("Error", "Try Again", 0.0)} ;
+    }
+
+    public DonorOverview[] getCollectorSpecific(String collectorEmail){
+        try{
+            DonorOverview[] transactionList;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.query("transactions", new String[] {"donorName, upiID, dateTime, amount"}, "collectorEmail=?", new String[]{collectorEmail}, null, null, null);
+
+            if(! cursor.moveToFirst())
+                return new DonorOverview[]{};
+            int count = cursor.getCount();
+            transactionList = new DonorOverview[count];
+            for(int i = 0; i < count; i++) {
+                transactionList[i] = new DonorOverview(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getDouble(3));
+                cursor.moveToNext();
+            }
+
+            cursor.close();
+            db.close();
+            return transactionList;
+        }catch (Exception e){
+            Log.e("myTag", "" + e);
+        }
+        return new DonorOverview[] {new DonorOverview("Error", "Try Again", "", 0.0)} ;
     }
 
 }
