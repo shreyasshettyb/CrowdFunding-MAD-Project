@@ -21,13 +21,16 @@ import java.io.IOException;
 
 public class TransactionDBHelper extends SQLiteOpenHelper {
 
-    public TransactionDBHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public TransactionDBHelper(@Nullable Context context, @Nullable String name, @Nullable
+    SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create = "CREATE TABLE transactions (transactionID INTEGER PRIMARY KEY AUTOINCREMENT, donorName TEXT, upiID TEXT, dateTime TEXT, amount NUMBER, collectorEmail TEXT, collectorName TEXT, fundingCode TEXT)";
+        String create = "CREATE TABLE transactions (transactionID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "donorName TEXT, upiID TEXT, dateTime TEXT, amount NUMBER, collectorEmail TEXT, " +
+                "collectorName TEXT, fundingCode TEXT)";
         db.execSQL(create);
     }
 
@@ -38,7 +41,7 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addTransaction(Transaction t){
+    public boolean addTransaction(Transaction t) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
@@ -52,40 +55,46 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
             long k = db.insert("transactions", null, values);
             db.close();
             return k != -1;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("myTag", e + "");
         }
         return false;
     }
 
 
-    public CollectorOverview[] getCollectorOverview(String fundingCode){
-        try{
+    public CollectorOverview[] getCollectorOverview(String fundingCode) {
+        try {
             CollectorOverview[] transactionList;
             SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.query("transactions", new String[] {"collectorName, collectorEmail", "SUM(amount) AS totalAmount"}, "fundingCode=?", new String[]{fundingCode}, "collectorEmail", null, null);
-            if(! cursor.moveToFirst())
+            Cursor cursor = db.query("transactions",
+                    new String[]{"collectorName, collectorEmail", "SUM(amount) AS totalAmount"},
+                    "fundingCode=?",
+                    new String[]{fundingCode}, "collectorEmail", null, null);
+            if (!cursor.moveToFirst())
                 return new CollectorOverview[]{};
             int count = cursor.getCount();
             transactionList = new CollectorOverview[count];
-            for(int i = 0; i < count; i++) {
-                transactionList[i] = new CollectorOverview(cursor.getString(0), cursor.getString(1), cursor.getDouble(2));
+            for (int i = 0; i < count; i++) {
+                transactionList[i] = new CollectorOverview(cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getDouble(2));
                 cursor.moveToNext();
             }
 
             cursor.close();
             db.close();
             return transactionList;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("myTag", "" + e);
         }
-        return new CollectorOverview[] {new CollectorOverview("Error", "Try Again", 0.0)} ;
+        return new CollectorOverview[]{new CollectorOverview("Error", "Try Again",
+                0.0)};
     }
 
-    public DonorOverview[] getCollectorSpecific(String collectorEmail, int dateT, int amtASC, int amtDESC){
+    public DonorOverview[] getCollectorSpecific(String collectorEmail, int dateT, int amtASC, int amtDESC) {
         String sortBy;
-        try{
-            if(dateT == 1)
+        try {
+            if (dateT == 1)
                 sortBy = "dateTime";
             else if (amtASC == 1)
                 sortBy = "amount ASC";
@@ -94,24 +103,28 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
 
             DonorOverview[] transactionList;
             SQLiteDatabase db = this.getReadableDatabase();
-            Cursor cursor = db.query("transactions", new String[] {"donorName, upiID, dateTime, amount"}, "collectorEmail=?", new String[]{collectorEmail}, null, null, sortBy);
+            Cursor cursor = db.query("transactions", new String[]{"donorName, upiID, dateTime, amount"},
+                    "collectorEmail=?", new String[]{collectorEmail}, null, null, sortBy);
 
-            if(! cursor.moveToFirst())
+            if (!cursor.moveToFirst())
                 return new DonorOverview[]{};
             int count = cursor.getCount();
             transactionList = new DonorOverview[count];
-            for(int i = 0; i < count; i++) {
-                transactionList[i] = new DonorOverview(cursor.getString(0), cursor.getString(1), cursor.getString(2),cursor.getDouble(3));
+            for (int i = 0; i < count; i++) {
+                transactionList[i] = new DonorOverview(cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2), cursor.getDouble(3));
                 cursor.moveToNext();
             }
 
             cursor.close();
             db.close();
             return transactionList;
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e("myTag", "" + e);
         }
-        return new DonorOverview[] {new DonorOverview("Error", "Try Again", "", 0.0)} ;
+        return new DonorOverview[]{new DonorOverview("Error", "Try Again",
+                "", 0.0)};
     }
 
     public boolean exportTransactionsToCSV(String fundingC) {
@@ -119,9 +132,10 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
 
         String query = "SELECT * FROM transactions where fundingCode=?";
 
-        Cursor cursor = db.rawQuery(query, new String[] {fundingC});
+        Cursor cursor = db.rawQuery(query, new String[]{fundingC});
 
-        File csvFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "transactions.csv");
+        File csvFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                "transactions.csv");
 
         try {
             FileWriter writer = new FileWriter(csvFile);
@@ -134,7 +148,7 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
                     String donorName = cursor.getString(1);
                     String upiID = cursor.getString(2);
                     String typeOfPayment = "UPIPayment";
-                    if(upiID.equals(""))
+                    if (upiID.equals(""))
                         typeOfPayment = "CASH";
                     String dateTime = cursor.getString(3);
                     double amount = cursor.getDouble(4);

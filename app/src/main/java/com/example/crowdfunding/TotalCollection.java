@@ -59,7 +59,8 @@ public class TotalCollection extends AppCompatActivity {
                 Toast.makeText(TotalCollection.this, "Download Successful", Toast.LENGTH_LONG).show();
             }
             else {
-                Toast.makeText(TotalCollection.this, "Download Unsuccessful, Please try again", Toast.LENGTH_LONG).show();
+                Toast.makeText(TotalCollection.this, "Download Unsuccessful, Please try again",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
