@@ -1,14 +1,10 @@
 package com.example.crowdfunding;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,13 +21,13 @@ public class TotalCollection extends AppCompatActivity {
     String fundingCode;
     Button downloadBtn;
 
-    private static final int REQUEST_WRITE_STORAGE = 112;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_total_collection);
         msgTextView = findViewById(R.id.msgTextView_totalCollection);
         try {
+            downloadBtn = findViewById(R.id.download_totalCollection);
             recyclerView = findViewById(R.id.recyclerViewTotalCollection);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -42,8 +38,10 @@ public class TotalCollection extends AppCompatActivity {
 
             CollectorOverview[] transactionList = transactionDBHelper.getCollectorOverview(fundingCode);
 
-            if(transactionList.length == 0)
+            if(transactionList.length == 0) {
                 msgTextView.setText(R.string.no_funds_collected_yet);
+                downloadBtn.setVisibility(View.GONE);
+            }
             else if (transactionList[0].getCollectorName().equals("Error")) {
                 msgTextView.setText(R.string.error_occurred_please_try_again);
             }
@@ -55,19 +53,14 @@ public class TotalCollection extends AppCompatActivity {
             Log.e("myTag", "" + e);
         }
 
-        downloadBtn = findViewById(R.id.download_totalCollection);
         downloadBtn.setOnClickListener(v -> {
-            if (hasWritePermission()) {
-                if(transactionDBHelper.exportTransactionsToCSV(fundingCode)){
-                    Toast.makeText(TotalCollection.this, "Download Successful", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    Toast.makeText(TotalCollection.this, "Download Unsuccessful, Please try again", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                requestWritePermission();
-            }
 
+            if(transactionDBHelper.exportTransactionsToCSV(fundingCode)){
+                Toast.makeText(TotalCollection.this, "Download Successful", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(TotalCollection.this, "Download Unsuccessful, Please try again", Toast.LENGTH_LONG).show();
+            }
         });
     }
 
@@ -86,33 +79,4 @@ public class TotalCollection extends AppCompatActivity {
         intent.putExtra("data", bundle);
         startActivity(intent);
     }
-
-    private boolean hasWritePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            int result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            return result == PackageManager.PERMISSION_GRANTED;
-        } else {
-            int result = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            return result == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
-
-    private void requestWritePermission() {
-        requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_WRITE_STORAGE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                transactionDBHelper.exportTransactionsToCSV(fundingCode);
-            } else {
-                Toast.makeText(this, "Write permission denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
 }

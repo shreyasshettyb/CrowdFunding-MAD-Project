@@ -126,27 +126,29 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
         try {
             FileWriter writer = new FileWriter(csvFile);
 
-            writer.append("TransactionID,DonorName,UpiID,DateTime,Amount,CollectorEmail,CollectorName,FundingCode\n");
+            writer.append("TransactionID,DonorName,TypeOfPayment,UpiID,DateTime,Amount,CollectorEmail,CollectorName\n");
 
             if (cursor.moveToFirst()) {
                 do {
                     int transactionID = cursor.getInt(0);
                     String donorName = cursor.getString(1);
                     String upiID = cursor.getString(2);
+                    String typeOfPayment = "UPIPayment";
+                    if(upiID.equals(""))
+                        typeOfPayment = "CASH";
                     String dateTime = cursor.getString(3);
                     double amount = cursor.getDouble(4);
                     String collectorEmail = cursor.getString(5);
                     String collectorName = cursor.getString(6);
-                    String fundingCode = cursor.getString(7);
 
                     writer.append(String.valueOf(transactionID)).append(",");
                     writer.append(donorName).append(",");
+                    writer.append(typeOfPayment).append(",");
                     writer.append(upiID).append(",");
                     writer.append(dateTime).append(",");
                     writer.append(String.valueOf(amount)).append(",");
                     writer.append(collectorEmail).append(",");
-                    writer.append(collectorName).append(",");
-                    writer.append(fundingCode).append("\n");
+                    writer.append(collectorName).append("\n");
                 } while (cursor.moveToNext());
             }
 
