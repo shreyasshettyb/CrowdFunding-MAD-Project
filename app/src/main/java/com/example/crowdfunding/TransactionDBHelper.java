@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -12,6 +13,10 @@ import androidx.annotation.Nullable;
 import com.example.crowdfunding.Models.CollectorOverview;
 import com.example.crowdfunding.Models.DonorOverview;
 import com.example.crowdfunding.Models.Transaction;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class TransactionDBHelper extends SQLiteOpenHelper {
@@ -107,6 +112,55 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
             Log.e("myTag", "" + e);
         }
         return new DonorOverview[] {new DonorOverview("Error", "Try Again", "", 0.0)} ;
+    }
+
+    public boolean exportTransactionsToCSV(String fundingC) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM transactions where fundingCode=?";
+
+        Cursor cursor = db.rawQuery(query, new String[] {fundingC});
+
+        File csvFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "transactions.csv");
+
+        try {
+            FileWriter writer = new FileWriter(csvFile);
+
+            writer.append("TransactionID,DonorName,UpiID,DateTime,Amount,CollectorEmail,CollectorName,FundingCode\n");
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int transactionID = cursor.getInt(0);
+                    String donorName = cursor.getString(1);
+                    String upiID = cursor.getString(2);
+                    String dateTime = cursor.getString(3);
+                    double amount = cursor.getDouble(4);
+                    String collectorEmail = cursor.getString(5);
+                    String collectorName = cursor.getString(6);
+                    String fundingCode = cursor.getString(7);
+
+                    writer.append(String.valueOf(transactionID)).append(",");
+                    writer.append(donorName).append(",");
+                    writer.append(upiID).append(",");
+                    writer.append(dateTime).append(",");
+                    writer.append(String.valueOf(amount)).append(",");
+                    writer.append(collectorEmail).append(",");
+                    writer.append(collectorName).append(",");
+                    writer.append(fundingCode).append("\n");
+                } while (cursor.moveToNext());
+            }
+
+            cursor.close();
+            writer.flush();
+            writer.close();
+
+            Log.d("myTag", "CSV exported successfully. Path: " + csvFile.getAbsolutePath());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("myTag", "Failed to export CSV: " + e.getMessage());
+            return false;
+        }
     }
 
 }
