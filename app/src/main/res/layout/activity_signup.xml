@@ -152,7 +152,7 @@
                 android:textColorHint="#000000">
 
                 <EditText
-                    android:id="@id/fundingName_signUp"
+                    android:id="@+id/fundingName_signUp"
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
