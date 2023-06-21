@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E8F5E9"
     tools:context=".Home">
 
 
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
+        android:textAlignment="center"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,6 +29,7 @@
             android:gravity="center"
             android:text="@string/app_name"
 
+            android:textColor="#000000"
             android:textSize="34sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="16dp"
@@ -43,6 +46,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="#E8F5E9"
         app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,15 +58,6 @@
             android:background="@drawable/boarder"
             android:onClick="getFundDetails">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginBottom="7dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView"
@@ -70,12 +65,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Collected Fund Details"
+                android:textColor="#000000"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.343"
-                app:layout_constraintStart_toEndOf="@+id/imageView3"
+
+                app:layout_constraintHorizontal_bias="0.435"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.511" />
 
@@ -90,6 +87,7 @@
         android:layout_marginRight="10dp"
         android:clickable="true"
         android:focusable="true"
+        app:cardBackgroundColor="#E8F5E9"
         android:foreground="?attr/selectableItemBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,30 +102,23 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
 
-            <ImageView
-                android:id="@+id/imageView44"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/textViewed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 android:gravity="center"
-                android:text="Collect Funds Now"
 
+                android:text="Collect Funds Now"
+                android:textColor="#000000"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/imageView44"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.511" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -136,7 +127,8 @@
         android:id="@+id/fundingCodeHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#B8AAAA"
+        android:background="#C8E6C9"
+        android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -148,6 +140,7 @@
         android:id="@+id/fundingNameHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/cardView"

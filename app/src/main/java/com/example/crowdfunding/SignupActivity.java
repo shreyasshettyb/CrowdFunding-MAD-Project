@@ -42,14 +42,13 @@ public class SignupActivity extends AppCompatActivity {
         TextView backButton = findViewById(R.id.back);
         backButton.setOnClickListener(view -> onBackPressed());
 
-        findViewById(R.id.fundingCodeLayout).setVisibility(View.GONE);
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 1)
-                    findViewById(R.id.fundingCodeLayout).setVisibility(View.VISIBLE);
+                    findViewById(R.id.fundingCode).setVisibility(View.VISIBLE);
                 else
-                    findViewById(R.id.fundingCodeLayout).setVisibility(View.GONE);
+                    findViewById(R.id.fundingCode).setVisibility(View.GONE);
             }
 
             @Override

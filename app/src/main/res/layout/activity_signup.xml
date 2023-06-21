@@ -135,7 +135,7 @@
                 <EditText
                     android:id="@+id/fundingCode"
                     android:layout_width="match_parent"
-
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:autofillHints=""
                     android:hint="@string/funding_code"
