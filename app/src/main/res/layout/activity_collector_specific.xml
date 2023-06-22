@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F1F8E9">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -21,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="COLLECTOR SPECIFIC DETAILS"
+            android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -44,6 +46,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="Collector Name:"
+            android:textColor="#000000"
             android:textStyle="bold" />
 
         <TextView
@@ -51,7 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="(collector name)" />
+            android:hint="(collector name)"
+            android:textColor="#000000" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,11 +72,12 @@
 
         <TextView
             android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:text="Collector Email ID:"
+            android:text="Email ID:"
+            android:textColor="#000000"
             android:textStyle="bold" />
 
         <TextView
@@ -80,7 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="(collector email)" />
+            android:hint="(collector email)"
+            android:textColor="#000000" />
 
     </LinearLayout>
 
@@ -101,6 +107,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="Total Amount:"
+            android:textColor="#000000"
             android:textStyle="bold" />
 
         <TextView
@@ -108,7 +115,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="(total amount)" />
+            android:hint="(total amount)"
+            android:textColor="#FF3D00" />
     </LinearLayout>
 
     <LinearLayout
@@ -129,6 +137,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="SortBy:"
+            android:textColor="#000000"
             android:textStyle="bold" />
 
         <TextView
@@ -139,7 +148,7 @@
             android:gravity="center_horizontal"
             android:onClick="sortBy"
             android:text="DateCollected"
-            android:textColor="#43A045" />
+            android:textColor="#3D5AFE" />
 
         <TextView
             android:id="@+id/amountAsc_collectorSpecific"
@@ -165,13 +174,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="418dp"
-        android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCollectorSpecific"

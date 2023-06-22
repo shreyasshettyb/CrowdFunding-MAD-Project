@@ -56,7 +56,7 @@ public class FundDetails extends AppCompatActivity {
 
     public void sortBy(View v){
         int dateT = 0, amtASC = 0, amtDESC = 0;
-        int green = 0xFF43A045;
+        int green = 0xFF3D5AFE;
         int black = 0xFF000000;
 
         try{

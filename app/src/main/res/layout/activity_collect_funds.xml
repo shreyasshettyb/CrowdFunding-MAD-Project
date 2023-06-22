@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F8E9"
     tools:context=".CollectFunds">
 
     <TextView
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="@string/fund_collection"
+        android:textColor="#000000"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,6 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:background="#C5E1A5"
+        android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -49,6 +53,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:onClick="updateAmount"
             android:text="@string/_100"
+            android:textColor="#0091EA"
             android:textStyle="bold" />
 
         <TextView
@@ -58,6 +63,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:onClick="updateAmount"
             android:text="@string/_200"
+            android:textColor="#2962FF"
             android:textStyle="bold" />
 
         <TextView
@@ -67,6 +73,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:onClick="updateAmount"
             android:text="@string/_500"
+            android:textColor="#2962FF"
             android:textStyle="bold" />
 
         <TextView
@@ -76,6 +83,7 @@
             android:gravity="center_horizontal|center_vertical"
             android:onClick="updateAmount"
             android:text="@string/_1000"
+            android:textColor="#304FFE"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -96,6 +104,7 @@
             android:layout_marginHorizontal="70dp"
             android:onClick="onRadioButtonClicked"
             android:text="@string/cash"
+            android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -106,6 +115,7 @@
             android:layout_marginHorizontal="30dp"
             android:onClick="onRadioButtonClicked"
             android:text="@string/upi"
+            android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold" />
     </RadioGroup>
@@ -128,6 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
             android:text="@string/upi_id"
+            android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -135,10 +146,11 @@
             android:id="@+id/upiID_fundCollection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:ems="10"
             android:hint="@string/upi_id_1"
             android:inputType="text"
-            android:autofillHints="" />
+            android:textColor="#000000" />
     </LinearLayout>
 
     <LinearLayout
@@ -159,6 +171,7 @@
             android:layout_height="17dp"
             android:layout_marginEnd="25dp"
             android:text="@string/amount"
+            android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -166,10 +179,11 @@
             android:id="@+id/amount_fundCollection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:ems="10"
             android:hint="@string/enter_amount"
             android:inputType="number"
-            android:autofillHints="" />
+            android:textColor="#FF3D00" />
     </LinearLayout>
 
     <LinearLayout
@@ -190,6 +204,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="25dp"
             android:text="@string/donor_name"
+            android:textColor="#000000"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -197,10 +212,11 @@
             android:id="@+id/donorName_fundCollection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:ems="10"
             android:hint="@string/donor_name_optional"
             android:inputType="text"
-            android:autofillHints="" />
+            android:textColor="#000000" />
     </LinearLayout>
 
     <LinearLayout
@@ -220,13 +236,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
+            android:backgroundTint="#66BB6A"
             android:text="@string/i_hereby_confirm_the_payment_made"
+            android:textColor="#000000"
             android:textSize="12sp" />
 
         <Button
             android:id="@+id/submit_fundCollection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#9CCC65"
             android:onClick="onSubmit"
             android:text="@string/submit_1" />
 
