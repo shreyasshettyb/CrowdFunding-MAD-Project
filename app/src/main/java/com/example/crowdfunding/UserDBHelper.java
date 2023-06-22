@@ -21,7 +21,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String create = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT, fundingName TEXT)";
+        String create = "CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, password TEXT, type TEXT, fundingCode TEXT, fundingName TEXT, upiId TEXT)";
         db.execSQL(create);
     }
 
@@ -42,6 +42,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
             values.put("type", user.getType());
             values.put("fundingCode", user.getFundingCode());
             values.put("fundingName", user.getFundingName());
+            values.put("upiId", user.getUpiAddress());
             long k = db.insert("users", null, values);
             db.close();
             return k != -1;
@@ -138,6 +139,42 @@ public class UserDBHelper extends SQLiteOpenHelper {
             Log.e("myTag", "" + e);
         }
         return false;
+    }
+
+    public Bundle getInfoUPI(String email){
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.query("users", new String[]{"name", "upiId"}, "email=?", new String[]{email}, null, null, null);
+
+            if(!cursor.moveToFirst())
+                return null;
+            Bundle bundle = new Bundle();
+            bundle.putString("Name", cursor.getString(0));
+            bundle.putString("UpiId", cursor.getString(1));
+            cursor.close();
+            db.close();
+            return bundle;
+        }catch(Exception e){
+            Log.e("myTag", "" + e);
+        }
+        return null;
+    }
+
+    public String getUserType(String email){
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.query("users", new String[]{"type"}, "email=?", new String[]{email}, null, null, null);
+
+            if(!cursor.moveToFirst())
+                return "Empty";
+            String type = cursor.getString(0);
+            cursor.close();
+            db.close();
+            return type;
+        }catch(Exception e){
+            Log.e("myTag", "" + e);
+        }
+        return "Error";
     }
 
 }

@@ -1,7 +1,5 @@
 package com.example.crowdfunding;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.crowdfunding.Models.User;
 
@@ -26,6 +26,8 @@ public class SignupActivity extends AppCompatActivity {
     EditText fundingName;
     UserDBHelper helper;
 
+    EditText upiAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,7 @@ public class SignupActivity extends AppCompatActivity {
         fundingCode = findViewById(R.id.fundingCode);
         type = findViewById(R.id.type);
         fundingName = findViewById(R.id.fundingName_signUp);
+        upiAddress = findViewById(R.id.upi_vpa);
         helper = new UserDBHelper(this, "userDB", null, 1);
 
         TextView backButton = findViewById(R.id.back);
@@ -61,11 +64,12 @@ public class SignupActivity extends AppCompatActivity {
     public void signUp(View v){
 
         String uname = name.getText().toString(), e = email.getText().toString(), pass = password.getText().toString(), conPass = conPassword.getText().toString();
+        String upi = upiAddress.getText().toString();
         String fundingC = fundingCode.getText().toString();
         String fundName = fundingName.getText().toString();
         String tp = type.getSelectedItem().toString();
 
-        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals("") || (tp.equals("Volunteer") && fundingC.equals("")) || fundName.equals("")){
+        if(uname.equals("") || e.equals("") || pass.equals("") || conPass.equals("") || (tp.equals("Volunteer") && fundingC.equals("")) || fundName.equals("") || upi.equals("")){
             Toast.makeText(this, "Enter all required fields", Toast.LENGTH_LONG).show();
             return;
         }
@@ -78,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
         if (! helper.getUserName(e).equals("")) {
             Toast.makeText(this, "Entered Credentials already exists", Toast.LENGTH_LONG).show();
         }
-        else if (isPasswordValid(pass, conPass)) {
+        else if (isPasswordUpiValid(pass, conPass, upi)) {
             if (tp.equals("Admin")) {
                 fundingC = generateRandomWord();
                 while (helper.isFundingCodePresent(fundingC)) {
@@ -89,7 +93,7 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(this, "Invalid FundingCode", Toast.LENGTH_LONG).show();
                 return;
             }
-            if (helper.addUser(new User(uname, e, pass, tp, fundingC, fundName))) {
+            if (helper.addUser(new User(uname, e, pass, tp, fundingC, fundName, upi))) {
                 Bundle bundle = helper.getInfo(e);
                 if(bundle == null) {
                     Toast.makeText(this, "Something went wrong, Try Log In", Toast.LENGTH_LONG).show();
@@ -111,12 +115,13 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isPasswordValid(String pass, String repass){
+    private boolean isPasswordUpiValid(String pass, String repass, String upi){
 
         String msg;
         Pattern lowerCase = Pattern.compile("^.*[a-z].*$");
         Pattern upperCase = Pattern.compile("^.*[A-Z].*$");
         Pattern number = Pattern.compile("^.*[0-9].*$");
+        Pattern upiPattern = Pattern.compile("^[a-zA-Z0-9.-]{2,256}@[a-zA-Z][a-zA-Z]{2,64}$");
         //Pattern specialCharacter = Pattern.compile("^.*[^a-zA-Z0-9].*$");
         if(pass.equals("") || repass.equals(""))
             msg = "Enter password and Confirm it";
@@ -130,6 +135,8 @@ public class SignupActivity extends AppCompatActivity {
             msg = "Password must at least have one digit";
         else if(! pass.equals(repass))
             msg = "Both passwords must be same";
+        else if (! upiPattern.matcher(upi).matches())
+            msg = "UPI ID is not valid";
         else
             return true;
 

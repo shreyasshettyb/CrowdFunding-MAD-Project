@@ -1,17 +1,18 @@
 package com.example.crowdfunding;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.crowdfunding.Models.Transaction;
 
@@ -28,6 +29,8 @@ public class CollectFunds extends AppCompatActivity {
     TransactionDBHelper transactionDBHelper;
     String choice = "";
     boolean radioChecked;
+
+    Button qrCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +49,24 @@ public class CollectFunds extends AppCompatActivity {
             transactionDBHelper = new TransactionDBHelper(this, "transactionDB", null, 1);
 
             ((TextView) findViewById(R.id.fundingName)).setText(fundingName);
+
+            qrCode = findViewById(R.id.generateQRCode);
+            qrCode.setOnClickListener(v -> {
+                Bundle b = userDBHelper.getInfoUPI(username);
+                String amt = amount.getText().toString();
+                if(amt.equals("")){
+                    Toast.makeText(this, "Enter the amount", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                b.putString("Amount", amt);
+                Intent intent = new Intent(CollectFunds.this, QRCodeActivity.class);
+                intent.putExtra("data", b);
+                startActivity(intent);
+            });
         }catch(Exception e){
             Log.e("myTag", "" + e);
         }
+
     }
 
     public void updateAmount(View v){
@@ -134,11 +152,14 @@ public class CollectFunds extends AppCompatActivity {
         radioChecked = ((RadioButton) view).isChecked();
         choice = ((RadioButton) view).getText().toString().toLowerCase();
         LinearLayout upiLayout = findViewById(R.id.upiLayout_fundCollection);
-        if(choice.equals("cash"))
+        if(choice.equals("cash")) {
             upiLayout.setVisibility(View.GONE);
-        else
+            qrCode.setVisibility(View.GONE);
+        }
+        else {
             upiLayout.setVisibility(View.VISIBLE);
-
+            qrCode.setVisibility(View.VISIBLE);
+        }
     }
 
     private boolean isUpiIdValid(String upiId){
@@ -152,4 +173,5 @@ public class CollectFunds extends AppCompatActivity {
             return true;
         return false;
     }
+
 }
