@@ -46,4 +46,8 @@
     <string name="donor_name2">(donor name)</string>
     <string name="type2">(type)</string>
     <string name="upi_id2">(upi ID)</string>
+    <string name="qrcode">QRCode</string>
+    <string name="scan_amp_pay"><![CDATA[SCAN & PAY]]></string>
+    <string name="username">Username</string>
+    <string name="password1">Password</string>
 </resources>

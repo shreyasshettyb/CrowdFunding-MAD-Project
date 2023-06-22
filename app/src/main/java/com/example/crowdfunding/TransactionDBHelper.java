@@ -69,7 +69,7 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
             Cursor cursor = db.query("transactions",
                     new String[]{"collectorName, collectorEmail", "SUM(amount) AS totalAmount"},
                     "fundingCode=?",
-                    new String[]{fundingCode}, "collectorEmail", null, null);
+                    new String[]{fundingCode}, "collectorEmail", null, "totalAmount DESC");
             if (!cursor.moveToFirst())
                 return new CollectorOverview[]{};
             int count = cursor.getCount();
@@ -127,17 +127,24 @@ public class TransactionDBHelper extends SQLiteOpenHelper {
                 "", 0.0)};
     }
 
-    public boolean exportTransactionsToCSV(String fundingC) {
+    public boolean exportTransactionsToCSV(String email, String fundingC, String type) {
         SQLiteDatabase db = this.getReadableDatabase();
+        String query;
+        Cursor cursor;
+        try {
+            if(type.equalsIgnoreCase("Admin")) {
+                query = "SELECT * FROM transactions where fundingCode=?";
+                cursor = db.rawQuery(query, new String[]{fundingC});
+            }
+            else {
+                query = "SELECT * FROM transactions where fundingCode=? and collectorEmail=?";
+                cursor = db.rawQuery(query, new String[]{fundingC, email});
+            }
 
-        String query = "SELECT * FROM transactions where fundingCode=?";
 
-        Cursor cursor = db.rawQuery(query, new String[]{fundingC});
-
-        File csvFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+            File csvFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 "transactions.csv");
 
-        try {
             FileWriter writer = new FileWriter(csvFile);
 
             writer.append("TransactionID,DonorName,TypeOfPayment,UpiID,DateTime,Amount,CollectorEmail,CollectorName\n");
