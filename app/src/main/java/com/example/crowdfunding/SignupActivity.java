@@ -49,9 +49,9 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 1)
-                    findViewById(R.id.fundingCode).setVisibility(View.VISIBLE);
+                    findViewById(R.id.fundingCodeLayout).setVisibility(View.VISIBLE);
                 else
-                    findViewById(R.id.fundingCode).setVisibility(View.GONE);
+                    findViewById(R.id.fundingCodeLayout).setVisibility(View.GONE);
             }
 
             @Override

@@ -21,7 +21,7 @@
     <string name="enter_amount">ENTER AMOUNT</string>
     <string name="total_collection">Total Collection</string>
     <string name="name_of_the_collector">Name of the Collector:</string>
-    <string name="email_of_the_collector">Email of the Collector:</string>
+    <string name="email_of_the_collector">Email :</string>
     <string name="total_amount_collected">Total Amount Collected:</string>
     <string name="amount_1">Amount</string>
     <string name="view_details">View Details</string>
